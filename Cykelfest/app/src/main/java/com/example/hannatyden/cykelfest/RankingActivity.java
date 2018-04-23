@@ -1,10 +1,15 @@
 package com.example.hannatyden.cykelfest;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -37,23 +42,43 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     public void onAccuracyChanged(Sensor arg0, int arg1) {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onSensorChanged(SensorEvent event) {
+        //DecimalFormat df = new DecimalFormat("0");
         float x = event.values[0];
         float y = event.values[1];
-        if (Math.abs(x) > Math.abs(y)) {
+        float g;
+        float r;
+        int color = Color.rgb(255, 255, 0); // yellow
+
+        //if (Math.abs(x) > Math.abs(y)) {
             if (x < 0) {
-                image.setImageResource(R.drawable.verygood);
-                textView.setText("You tilt the device right");
+                r = (1-(-x)/7);
+                if(r < 0){
+                    r= 0;
+                }
+                g = 1;
+                //image.setImageResource(R.drawable.verygood);
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
             }
             if (x > 0) {
-                image.setImageResource(R.drawable.bad);
-                textView.setText("You tilt the device left");
+                g = (1-x/7);
+                r = 1;
+                if(g < 0){
+                    g = 0;    //image.setImageResource(R.drawable.bad);
+                }
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
             }
-        }
-        if (x > (-2) && x < (2) && y > (-2) && y < (2)) {
-            image.setImageResource(R.drawable.good);
-            textView.setText("Not tilt device");
+       // }
+        if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
+            //image.setImageResource(R.drawable.good);
+            getWindow().getDecorView().setBackgroundColor(color);
+            r = 1;
+            g = 1;
+            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
         }
     }
 
