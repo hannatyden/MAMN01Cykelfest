@@ -23,6 +23,8 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private Sensor sensor;
     private TextView textView;
     private ImageView image;
+    private TextView rank_nbr;
+    private int score;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
         //locate views
         textView = (TextView) findViewById(R.id.txt);
         image = (ImageView) findViewById(R.id.img);
+        rank_nbr = (TextView) findViewById(R.id.ranknbr);
     }
 
     @Override
@@ -80,6 +83,9 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             g = 1;
             textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
         }
+
+        score = (int) x * 5;
+        rank_nbr.setText( "" + score);
     }
 
     @Override
