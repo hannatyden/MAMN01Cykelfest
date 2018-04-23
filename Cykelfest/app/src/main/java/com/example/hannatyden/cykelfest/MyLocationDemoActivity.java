@@ -1,6 +1,8 @@
 package com.example.hannatyden.cykelfest;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,27 +26,53 @@ public class MyLocationDemoActivity extends FragmentActivity
         OnMapReadyCallback {
 
     private GoogleMap mMap;
+    //final TextView tv = new TextView(getApplicationContext());
+    final float startSize= 100;
+    final float endSize = 1000;
+    long animationDuration = 600;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_location_demo);
-
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
 
-        ViewGroup.MarginLayoutParams parms = (ViewGroup.MarginLayoutParams) mapFragment.getView().getLayoutParams();
-        parms.bottomMargin = 0;
-        parms.topMargin = 300;
+        //ViewGroup.MarginLayoutParams parms = (ViewGroup.MarginLayoutParams) mapFragment.getView().getLayoutParams();
+        //parms.bottomMargin = 0;
+        //parms.topMargin = 100;
+
+        final TextView tv = findViewById(R.id.info);
+        tv.bringToFront();
+        ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
+            animator.setDuration(animationDuration);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float animatedValue = (float) valueAnimator.getAnimatedValue();
+
+                tv.setHeight((int) animatedValue);
 
 
-        //ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
+            }
+        });
+
+        animator.start();
+
+
+            //ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
 
         //params.height = 900;
-        //mapFragment.getView().setLayoutParams(params);
         mapFragment.getMapAsync(this);
+
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -60,6 +89,9 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+    }
+
+    public void onViewClick(ValueAnimator animator){
     }
 
     @Override

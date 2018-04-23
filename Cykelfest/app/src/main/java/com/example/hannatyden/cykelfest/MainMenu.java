@@ -21,7 +21,7 @@ public class MainMenu extends AppCompatActivity {
 
     /** Called when the user taps the Accelerometer button */
     public void kartaButton(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, MyLocationDemoActivity.class);
         startActivity(intent);
     }
 }
