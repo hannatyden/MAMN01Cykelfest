@@ -2,43 +2,58 @@ package com.example.hannatyden.cykelfest;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-
-public class RankingActivity extends AppCompatActivity implements SensorEventListener {
+public class RankingActivity extends AppCompatActivity implements SensorEventListener{
 
     private SensorManager sensorManager;
-    private Sensor sensor;
+    private Sensor accelerometer;
     private TextView textView;
     private ImageView image;
     private TextView rank_nbr;
+    private ConstraintLayout layout;
     private int score;
+
+    private float vals[] = new float[2];
+    private float alpha = 0.2f; //Hur snabbt x ändras
+
+    private int counter = 0; //testvariabel
+    private boolean isClicked = false; //Används för att pausa rankingen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
-        //declaring Sensor Manager and sensor type
+        //declaring Sensor Manager and accelerometer type
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         //locate views
         textView = (TextView) findViewById(R.id.txt);
         image = (ImageView) findViewById(R.id.img);
         rank_nbr = (TextView) findViewById(R.id.ranknbr);
+        layout = (ConstraintLayout) findViewById(R.id.RankingActivityLayout);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //Anropas när man clickar någonstans på skärmen under aktiviteten.
+                counter++;
+                textView.setText("I have been clicked: " + counter + " times");
+                isClicked = !isClicked;
+            }
+        });
     }
 
     @Override
@@ -48,50 +63,60 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onSensorChanged(SensorEvent event) {
-        //DecimalFormat df = new DecimalFormat("0");
-        float x = event.values[0];
-        float y = event.values[1];
-        float g;
-        float r;
-        int color = Color.rgb(255, 255, 0); // yellow
+        if (isClicked) { //Ingen data hanteras när man tryckt på skärmen (VARNING: Busy Wait är inte bra för batteritid osv)
 
-        //if (Math.abs(x) > Math.abs(y)) {
+
+        } else {
+            vals[0] = vals[0] + alpha * (event.values[0] - vals[0]);
+            vals[1] = vals[1] + alpha * (event.values[1] - vals[1]);
+
+            float x = vals[0];
+            float y = vals[1];
+            float g;
+            float r;
+
             if (x < 0) {
-                r = (1-(-x)/7);
-                if(r < 0){
-                    r= 0;
+                r = (1 - (-x) / 7);
+                if (r < 0) {
+                    r = 0;
                 }
                 g = 1;
-                //image.setImageResource(R.drawable.verygood);
-                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
+//                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
             if (x > 0) {
-                g = (1-x/7);
+                g = (1 - x / 7);
                 r = 1;
-                if(g < 0){
-                    g = 0;    //image.setImageResource(R.drawable.bad);
+                if (g < 0) {
+                    g = 0;
                 }
-                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
+//                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
-       // }
-        if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
-            //image.setImageResource(R.drawable.good);
-            getWindow().getDecorView().setBackgroundColor(color);
-            r = 1;
-            g = 1;
-            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g);
-        }
 
-        score = (int) x * 5;
-        rank_nbr.setText( "" + score);
+            if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
+                getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
+                r = 1;
+                g = 1;
+//            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+            }
+            float tempX = -x;
+            score = (int) tempX;
+            rank_nbr.setText("" + score);
+            //Försök att påverka hastigheten på x, fungerar inte som tänkt kanske inte behövs, fråga gruppen
+//        if(alpha > 0.1) {
+//            alpha = Math.abs(x) / 20;
+//        } else {
+//            alpha = 0.1f;
+//        }
+        }
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME); //Ändrade till SENSOR_DELAY_GAME för att få det smooth, kan ställa in i microsekunder på högre APIer
     }
 
     @Override

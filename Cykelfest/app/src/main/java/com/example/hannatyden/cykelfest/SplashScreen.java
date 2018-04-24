@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.View;
 
 public class SplashScreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
     /* Starts the splashscreen and shows it a set amount of milliseconds
         as stated by SPLASH_DISPLAY_LENGTH
