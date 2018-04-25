@@ -25,13 +25,21 @@ public class MyLocationDemoActivity extends FragmentActivity
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback, GestureDetector.OnGestureListener{
 
+
+    /* Klassen för kartskärmen, innehåller en GestureDetector som läser av rörelser som görs på Info-boxen längst
+     * upp på skärmen, och förstorar/förminskar den då rörelser läses av. */
     private GoogleMap mMap;
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
+
+    /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
+    *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
     final float startSize= 100;
     final float endSize = 800;
     long animationDuration = 600;
+
+    // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
     boolean infoViewOpened = false;
 
 
@@ -46,16 +54,11 @@ public class MyLocationDemoActivity extends FragmentActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         gestureScanner = new GestureDetector(this);
 
-        //ViewGroup.MarginLayoutParams parms = (ViewGroup.MarginLayoutParams) mapFragment.getView().getLayoutParams();
-        //parms.bottomMargin = 0;
-        //parms.topMargin = 100;
 
         final TextView tv = findViewById(R.id.info);
         tv.bringToFront();
 
-
-
-        //Animation that makes the info box bigger
+        //Animation som gör info-boxen större ifall en rörelse görs på boxen
         animateToBigger = ValueAnimator.ofFloat(startSize, endSize);
         animateToBigger.setDuration(animationDuration);
         animateToBigger.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -69,26 +72,18 @@ public class MyLocationDemoActivity extends FragmentActivity
             }
         });
 
-        //Animation that makes the info box smaller
+        //Animation som gör info-boxen mindre ifall en rörelse görs på boxen
         animateToSmaller = ValueAnimator.ofFloat(endSize, startSize);
         animateToSmaller.setDuration(animationDuration);
         animateToSmaller.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float animatedValue = (float) valueAnimator.getAnimatedValue();
-
                 tv.setHeight((int) animatedValue);
-
-
             }
         });
 
-
-
-
-        //animateToBigger.start();
-
-
+        // Listener som läggs till info TextView:n och läser av rörelser
         tv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event){
@@ -96,10 +91,6 @@ public class MyLocationDemoActivity extends FragmentActivity
             }
         });
 
-
-            //ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
-
-        //params.height = 900;
         mapFragment.getMapAsync(this);
 
     }
