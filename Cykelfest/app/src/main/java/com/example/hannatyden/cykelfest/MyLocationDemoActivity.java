@@ -1,47 +1,50 @@
 package com.example.hannatyden.cykelfest;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MyLocationDemoActivity extends FragmentActivity
         implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback, GestureDetector.OnGestureListener{
 
     private GoogleMap mMap;
-    //final TextView tv = new TextView(getApplicationContext());
+    GestureDetector gestureScanner;
+    ValueAnimator animateToBigger;
+    ValueAnimator animateToSmaller;
     final float startSize= 100;
-    final float endSize = 1000;
+    final float endSize = 800;
     long animationDuration = 600;
+    boolean infoViewOpened = false;
 
 
 
 
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_location_demo);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
+        gestureScanner = new GestureDetector(this);
 
         //ViewGroup.MarginLayoutParams parms = (ViewGroup.MarginLayoutParams) mapFragment.getView().getLayoutParams();
         //parms.bottomMargin = 0;
@@ -49,9 +52,13 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         final TextView tv = findViewById(R.id.info);
         tv.bringToFront();
-        ValueAnimator animator = ValueAnimator.ofFloat(startSize, endSize);
-            animator.setDuration(animationDuration);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+
+
+        //Animation that makes the info box bigger
+        animateToBigger = ValueAnimator.ofFloat(startSize, endSize);
+        animateToBigger.setDuration(animationDuration);
+        animateToBigger.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float animatedValue = (float) valueAnimator.getAnimatedValue();
@@ -62,7 +69,32 @@ public class MyLocationDemoActivity extends FragmentActivity
             }
         });
 
-        animator.start();
+        //Animation that makes the info box smaller
+        animateToSmaller = ValueAnimator.ofFloat(endSize, startSize);
+        animateToSmaller.setDuration(animationDuration);
+        animateToSmaller.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float animatedValue = (float) valueAnimator.getAnimatedValue();
+
+                tv.setHeight((int) animatedValue);
+
+
+            }
+        });
+
+
+
+
+        //animateToBigger.start();
+
+
+        tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                return gestureScanner.onTouchEvent(event);
+            }
+        });
 
 
             //ViewGroup.LayoutParams params = mapFragment.getView().getLayoutParams();
@@ -105,5 +137,49 @@ public class MyLocationDemoActivity extends FragmentActivity
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
+    }
+
+    /** Called when the user taps the Accelerometer button */
+    public void infoClick() {
+
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        Log.i("test", "tastststs");
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        if(infoViewOpened){
+            animateToSmaller.start();
+            infoViewOpened = false;
+        } else {
+            animateToBigger.start();
+            infoViewOpened = true;
+        }
+
+        return true;
     }
 }

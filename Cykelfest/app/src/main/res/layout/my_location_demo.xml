@@ -19,7 +19,8 @@
         android:translationZ="5dp"
         android:background="@drawable/common_google_signin_btn_text_light_normal_background"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <fragment
         android:id="@+id/map"
