@@ -3,8 +3,12 @@ package com.example.hannatyden.cykelfest;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -16,9 +20,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MyLocationDemoActivity extends FragmentActivity
         implements GoogleMap.OnMyLocationButtonClickListener,
@@ -29,6 +39,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     /* Klassen för kartskärmen, innehåller en GestureDetector som läser av rörelser som görs på Info-boxen längst
      * upp på skärmen, och förstorar/förminskar den då rörelser läses av. */
     private GoogleMap mMap;
+    private Context context = this;
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
@@ -42,7 +53,10 @@ public class MyLocationDemoActivity extends FragmentActivity
     // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
     boolean infoViewOpened = false;
 
+    private LatLng currentPartyLoc;
+    private TextView tv;
 
+    private boolean flag;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -55,7 +69,7 @@ public class MyLocationDemoActivity extends FragmentActivity
         gestureScanner = new GestureDetector(this);
 
 
-        final TextView tv = findViewById(R.id.info);
+        tv = findViewById(R.id.info);
         tv.bringToFront();
 
         //Animation som gör info-boxen större ifall en rörelse görs på boxen
@@ -93,13 +107,16 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         mapFragment.getMapAsync(this);
 
-    }
+        //fult ta bort vid tillfälle
+        flag = true;
 
+    }
 
 
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+
         // TODO: Before enabling the My Location layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
@@ -112,10 +129,62 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+
+
+        currentPartyLoc = new LatLng(55.714799, 13.212359); //IKDC
+
+       // mMap.addMarker(new MarkerOptions()
+       //         .position(new LatLng(55.7091, 13.2142))
+       //         .title("Fest 1 - Sparta"));
+//
+  //      mMap.addMarker(new MarkerOptions()
+    //            .position(new LatLng(55.7053, 13.1868))
+      //          .title("Fest 2 - Centralen"));
+//
+  //      mMap.addMarker(new MarkerOptions()
+    //            .position(new LatLng(55.7206, 13.2122))
+      //          .title("Fest 3 - Delphi"));
+//
+        mMap.addMarker(new MarkerOptions()
+                .position(currentPartyLoc)
+                .title("Current party location "));
+
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                Double curLat = location.getLatitude();
+                Double curLong = location.getLongitude();
+                if(flag) {
+                     CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 18);
+                     mMap.animateCamera(cu);
+                     flag = !flag;
+                }
+                Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
+                Log.i("test", distance.toString());
+                if(distance < 80E-5){
+                    Log.i("test", "You are at your party" + distance.toString());
+                    tv.setText("You are at your party location");
+                    // Get instance of Vibrator from current Context
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                    // Vibrate for 400 milliseconds
+                    v.vibrate(400);
+                    Intent intent = new Intent(context, DestInfoScreen.class);
+                    startActivity(intent);
+                } else {
+                    tv.setText("You are not at your party location :(");
+                }
+            }
+        });
+
     }
 
     public void onViewClick(ValueAnimator animator){
     }
+
+
+
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {

@@ -22,13 +22,14 @@ public class SplashScreen extends AppCompatActivity {
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
+        final CurrentParty currentParty = new CurrentParty();
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
 
                 Intent mainIntent = new Intent(SplashScreen.this,MainMenu.class);
-
+                //mainIntent.putExtra("CurrentParty", currentParty);
                 SplashScreen.this.startActivity(mainIntent);
                 SplashScreen.this.finish();
             }
