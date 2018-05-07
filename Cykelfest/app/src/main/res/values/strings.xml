@@ -3,4 +3,13 @@
     <string name="title_activity_maps">Map</string>
     <string name="_56">56</string>
     <string name="todo">TODO</string>
+    <string name="tema">Tema</string>
+    <string name="festnamn">Festnamn</string>
+    <string name="create_party">Create a party</string>
+    <string name="datum_yymmdd">Datum yymmdd</string>
+    <string name="plats">Plats</string>
+    <string name="max_antal_personer">Max antal personer</string>
+    <string name="sista_anm_lningsdatum">Sista anmälningsdatum</string>
+    <string name="sista_anm_lningsdatum_yymmdd">Sista anmälningsdatum yymmdd</string>
+    <string name="skapa_fest">Skapa Fest</string>
 </resources>
