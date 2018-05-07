@@ -27,7 +27,8 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private ImageButton okButton;
 
     private ConstraintLayout layout;
-    private int score;
+    private int scoreX;
+    private int scoreY;
 
     private float vals[] = new float[2];
     private float alpha = 0.2f; //Hur snabbt x ändras
@@ -90,7 +91,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             float y = vals[1];
             float g;
             float r;
-
+/**
             if (x < 0) {
                 r = (1 - (-x) / 7);
                 if (r < 0) {
@@ -98,7 +99,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 }
                 g = 1;
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
-//                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+               textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
             if (x > 0) {
                 g = (1 - x / 7);
@@ -107,18 +108,49 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                     g = 0;
                 }
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
-//                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
 
             if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
                 getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
                 r = 1;
                 g = 1;
-//            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
+ */
+            if(x > -y) {
+                g = 1 - (x+y)/20;
+                r = 1;
+                if(g < 0) {
+                    g = 0;
+                }
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+
+
+            }  if (x < -y) {
+                r = 1 + (x+y)/20;
+                g = 1;
+                if(r < 0) {
+                    r = 0;
+                }
+                getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+
+            }
+
+            if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
+                getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
+                r = 1;
+                g = 1;
+                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+            }
+
             float tempX = -x;
-            score = (int) tempX;
-            rank_nbr.setText("" + score);
+            float tempY = -y;
+            scoreX = (int) tempX;
+            scoreY = (int) tempY;
+            rank_nbr.setText("X: " + scoreX + " Y: " + scoreY);
             //Försök att påverka hastigheten på x, fungerar inte som tänkt kanske inte behövs, fråga gruppen
 //        if(alpha > 0.1) {
 //            alpha = Math.abs(x) / 20;
