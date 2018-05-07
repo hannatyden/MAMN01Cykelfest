@@ -136,10 +136,21 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             float yTrans = height/17;
 
             float centerX = width/2;
-            float centerY = height/2;
+            float centerY = height/2 + height/9;
 
             float xpos = (x+1) * xTrans;
             float ypos = (y-1) * yTrans;
+
+            if (xpos > width/2){
+                cursor.setX(0);
+            } else if (xpos <  -width/2 - 100){
+                cursor.setX(width);
+            } else {
+                cursor.setX(centerX - xpos);
+            }
+
+
+
 
             /*
             if(xpos < 0) {
@@ -150,7 +161,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 ypos = -ypos;
             }
             */
-            cursor.setX(centerX-xpos);
+
             cursor.setY(centerY+ypos);
             r = 1;
             g = 1;
@@ -163,24 +174,17 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 }
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
 
-
-
-            }  if (x < -y) {
+            }  else if (x < -y) {
                 r = 1 + (x+y)/14;
                 g = 1;
                 if(r < 0) {
                     r = 0;
                 }
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
-
-
-            }
-
-            if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
+            } else if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
                 getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
                 r = 1;
                 g = 1;
-
             }
 
             float tempX = -x;
