@@ -47,7 +47,8 @@
         <activity android:name=".RankingActivity" />
         <activity android:name=".HighScoreActivity" />
         <activity android:name=".DestInfoScreen" />
-        <activity android:name=".CreateParty">android:parentActivityName=".MainMenu">
+        <activity android:name=".CreateParty">
+            android:parentActivityName=".MainMenu">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
