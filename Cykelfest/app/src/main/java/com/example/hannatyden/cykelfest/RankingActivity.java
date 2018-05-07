@@ -2,7 +2,9 @@ package com.example.hannatyden.cykelfest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,10 +28,15 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private ImageView image;
     private TextView rank_nbr;
     private ImageButton okButton;
+    private Display display;
+    private ImageView cursor;
 
     private ConstraintLayout layout;
     private int scoreX;
     private int scoreY;
+    private int width;
+    private int height;
+
 
     private float vals[] = new float[2];
     private float alpha = 0.2f; //Hur snabbt x ändras
@@ -46,12 +54,18 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         //locate views
+        cursor = (ImageView) findViewById(R.id.Cursor);
         textView = (TextView) findViewById(R.id.txt);
         image = (ImageView) findViewById(R.id.img);
         rank_nbr = (TextView) findViewById(R.id.ranknbr);
         layout = (ConstraintLayout) findViewById(R.id.RankingActivityLayout);
         okButton = (ImageButton) findViewById(R.id.okButton);
         okButton.setVisibility(View.INVISIBLE);
+        display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = size.x;
+        height = size.y - 400;
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,24 +132,47 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
             }
  */
+            float xTrans = width/17;
+            float yTrans = height/17;
+
+            float centerX = width/2;
+            float centerY = height/2;
+
+            float xpos = (x+1) * xTrans;
+            float ypos = (y-1) * yTrans;
+
+            /*
+            if(xpos < 0) {
+                xpos = -xpos;
+            }
+
+            if(ypos < 0) {
+                ypos = -ypos;
+            }
+            */
+            cursor.setX(centerX-xpos);
+            cursor.setY(centerY+ypos);
+            r = 1;
+            g = 1;
+
             if(x > -y) {
-                g = 1 - (x+y)/20;
+                g = 1 - (x+y)/14;
                 r = 1;
                 if(g < 0) {
                     g = 0;
                 }
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+
 
 
             }  if (x < -y) {
-                r = 1 + (x+y)/20;
+                r = 1 + (x+y)/14;
                 g = 1;
                 if(r < 0) {
                     r = 0;
                 }
                 getWindow().getDecorView().setBackgroundColor(Color.rgb(r,g,0));
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+
 
             }
 
@@ -143,7 +180,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
                 r = 1;
                 g = 1;
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
+
             }
 
             float tempX = -x;
@@ -151,13 +188,23 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             scoreX = (int) tempX;
             scoreY = (int) tempY;
             rank_nbr.setText("X: " + scoreX + " Y: " + scoreY);
+
             //Försök att påverka hastigheten på x, fungerar inte som tänkt kanske inte behövs, fråga gruppen
 //        if(alpha > 0.1) {
 //            alpha = Math.abs(x) / 20;
 //        } else {
 //            alpha = 0.1f;
 //        }
+
+
+            //draw image
+            String debugString = ("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n width: " + width + "\n height: " + height + "\n xpos: " + xpos + "\n ypos: " + ypos );
+            textView.setText(debugString);
+
         }
+
+
+
     }
 
 

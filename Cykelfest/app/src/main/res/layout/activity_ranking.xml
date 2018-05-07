@@ -52,4 +52,12 @@
         app:layout_constraintTop_toBottomOf="@+id/ranknbr"
         app:srcCompat="@drawable/bad" />
 
+    <ImageView
+        android:id="@+id/Cursor"
+        android:layout_width="50dp"
+        android:layout_height="44dp"
+        app:srcCompat="@drawable/bad"
+        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteY="244dp" />
+
 </android.support.constraint.ConstraintLayout>
