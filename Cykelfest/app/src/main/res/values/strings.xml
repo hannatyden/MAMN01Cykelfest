@@ -12,4 +12,5 @@
     <string name="sista_anm_lningsdatum">Sista anmälningsdatum</string>
     <string name="sista_anm_lningsdatum_yymmdd">Sista anmälningsdatum yymmdd</string>
     <string name="skapa_fest">Skapa Fest</string>
+    <string name="title_activity_find_party">FindParty</string>
 </resources>
