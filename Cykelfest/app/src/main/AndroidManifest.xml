@@ -55,6 +55,9 @@
                 android:value=".MainMenu" />
         </activity>
         <activity android:name=".FindParty" />
+        <activity android:name=".Pop"
+            android:theme="@style/AppTheme.CustomTheme"
+            ></activity>
     </application>
 
 </manifest>
