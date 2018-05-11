@@ -6,13 +6,12 @@
     android:background="#a4c47fce">
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="259dp"
-        android:layout_height="325dp"
+        android:id="@+id/textView6"
+        android:layout_width="253dp"
+        android:layout_height="133dp"
         android:layout_centerInParent="true"
-        android:text="En cykelfest går till som så att man äter förätt, huvudrätt och efterrätt på tre olika ställen med tre olika sällskap. Hur fantastiskt låter inte det?! Skapa antingen en egen cykelfest eller signa upp dig på en redan existerande fest!"
+        android:text="Du har nu en ny plats att ta dig till för nästa rätt! Se kartan för att ta dig till rätt plats."
         android:textAlignment="center"
-        android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="bold" />
 </RelativeLayout>

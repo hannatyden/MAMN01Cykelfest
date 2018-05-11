@@ -184,6 +184,7 @@ public class MyLocationDemoActivity extends FragmentActivity
         imgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
@@ -270,6 +271,18 @@ public class MyLocationDemoActivity extends FragmentActivity
                             .position(currentPartyLoc)
                             .title("Current party location "));
                     Log.i("tag", "flag");
+
+                    //pop up som säger att man nu ska ta sig till en annan location
+                    startActivity(new Intent(MyLocationDemoActivity.this, Pop2.class));
+
+                    ImageButton ib = (ImageButton) findViewById(R.id.bikeButton);
+                    ib.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
+
                 }
             }
         }
