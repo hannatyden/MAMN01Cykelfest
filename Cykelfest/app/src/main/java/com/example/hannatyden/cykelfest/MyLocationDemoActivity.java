@@ -6,8 +6,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
+import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -17,18 +20,31 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MyLocationDemoActivity extends FragmentActivity
         implements GoogleMap.OnMyLocationButtonClickListener,
@@ -71,6 +87,22 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         tv = findViewById(R.id.info);
         tv.bringToFront();
+
+
+        //mMap.setMyLocationEnabled(true);
+
+/*
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            // Show rationale and request permission.
+        }*/
+
+
+
+
+
+
 
         //Animation som gör info-boxen större ifall en rörelse görs på boxen
         animateToBigger = ValueAnimator.ofFloat(startSize, endSize);
@@ -120,18 +152,40 @@ public class MyLocationDemoActivity extends FragmentActivity
         // TODO: Before enabling the My Location layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
         }
 
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false); // delete default button
+
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
 
+        final Criteria criteria = new Criteria();
+        final LocationManager locationManager =
+                (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        final String provider = locationManager.getBestProvider(criteria, false);
+        final Location location = locationManager.getLastKnownLocation(provider);
+        ImageButton imgbtn = (ImageButton) findViewById(R.id.bikeButton); //your button
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
+                        LatLng(location.getLatitude(),
+                        location.getLongitude()), 17));
+            }
+        });
+
+
+       // mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         currentPartyLoc = new LatLng(55.714799, 13.212359); //IKDC
+
+
 
        // mMap.addMarker(new MarkerOptions()
        //         .position(new LatLng(55.7091, 13.2142))
@@ -149,6 +203,11 @@ public class MyLocationDemoActivity extends FragmentActivity
                 .position(currentPartyLoc)
                 .title("Current party location "));
 
+
+
+
+        LatLng origin = (new LatLng(location.getLatitude(), location.getLongitude()));
+        LatLng dest = currentPartyLoc;
 
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -242,4 +301,6 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         return true;
     }
+
+
 }

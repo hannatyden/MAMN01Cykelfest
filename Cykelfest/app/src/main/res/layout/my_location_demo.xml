@@ -29,15 +29,27 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
         tools:context="com.example.hannatyden.cykelfest.MyLocationDemoActivity"
-        tools:layout_editor_absoluteY="100dp" />
+        tools:layout_editor_absoluteY="100dp"
+        tools:layout_width="match_parent" />
 
-    <![CDATA[
+    <ImageButton
+        android:id="@+id/bikeButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/bad"
+        android:layout_gravity="bottom" /><![CDATA[
+
+
+
+
 
     android:layout_width="368dp"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp">
 
-    ]]>
+
+
+]]>
 </FrameLayout>
 
 
