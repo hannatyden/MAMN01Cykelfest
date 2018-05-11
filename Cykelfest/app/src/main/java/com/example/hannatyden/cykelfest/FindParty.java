@@ -17,22 +17,23 @@ public class FindParty extends AppCompatActivity {
     //private static final String[]paths = {"Vinter", "Vår", "Sommar"};
     //private ArrayList<String> toSend = new ArrayList<>();
     //private ArrayList<String> parties = new ArrayList<>();
+    private ArrayList<PartyItem> parties = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_party);
 
-//        //collect our intent
+        //collect our intent
         Intent intent = getIntent();
         PartyItem partyItem = intent.getParcelableExtra("Party");
-//
+
         if(partyItem == null){
             Log.i("test","Hallå");
         }
-//        //now collect all property values
-       // String theme = partyItem.getTheme();
-        //String name = partyItem.getName();
+//        now collect all property values
+//        String theme = partyItem.getTheme();
+//        String name = partyItem.getName();
 //        String date = partyItem.getDate();
 //        String address = partyItem.getAddress();
 //        String max = partyItem.getMax();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#a4c47fce">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="253dp"
+        android:layout_height="133dp"
+        android:layout_centerInParent="true"
+        android:text="Du har nu en ny plats att ta dig till för nästa rätt! Se kartan för att ta dig till rätt plats."
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+</RelativeLayout>
