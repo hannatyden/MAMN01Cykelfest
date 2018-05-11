@@ -141,12 +141,20 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             float xpos = (x+1) * xTrans;
             float ypos = (y-1) * yTrans;
 
-            if (xpos > width/2){
-                cursor.setX(0);
-            } else if (xpos <  -width/2 - 100){
-                cursor.setX(width);
+            if (xpos > 360){
+                cursor.setX(180);
+            } else if (xpos <  -260){
+                cursor.setX(800);
             } else {
                 cursor.setX(centerX - xpos);
+            }
+
+            if (ypos < -120){
+                cursor.setY(750);
+            } else if (ypos > 515){
+                cursor.setY(1360);
+            } else {
+                cursor.setY(centerY + ypos);
             }
 
 
@@ -161,8 +169,8 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 ypos = -ypos;
             }
             */
-
-            cursor.setY(centerY+ypos);
+//            cursor.setX(centerX-xpos);
+ //           cursor.setY(centerY+ypos);
             r = 1;
             g = 1;
 
@@ -187,11 +195,16 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 g = 1;
             }
 
-            float tempX = -x;
-            float tempY = -y;
+            float tempX = (cursor.getX() - 180)/(62*2);
+            float tempY = (1350 - cursor.getY())/(65*2);
+            if(cursor.getY() == 750) {
+                tempY = 5f;
+            }
+            float totalscoreF = tempX + tempY;
             scoreX = (int) tempX;
             scoreY = (int) tempY;
-            rank_nbr.setText("X: " + scoreX + " Y: " + scoreY);
+            int totalscore = (int) totalscoreF;
+            rank_nbr.setText("" + (totalscore));
 
             //Försök att påverka hastigheten på x, fungerar inte som tänkt kanske inte behövs, fråga gruppen
 //        if(alpha > 0.1) {
@@ -202,7 +215,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
 
 
             //draw image
-            String debugString = ("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n width: " + width + "\n height: " + height + "\n xpos: " + xpos + "\n ypos: " + ypos );
+            String debugString = ("Score X : " + scoreX + "\n Score Y : " + scoreY + "\n xpos: " + xpos + "\n ypos: " + ypos + "\nx: " + cursor.getX() + "\nY: " + cursor.getY());
             textView.setText(debugString);
 
         }

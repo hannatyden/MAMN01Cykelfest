@@ -24,7 +24,7 @@ public class MainMenu extends AppCompatActivity {
 
     /** Called when the user taps the karta button */
     public void kartaButton(View view) {
-        Intent intent = new Intent(this, Location.class);
+        Intent intent = new Intent(this, MyLocationDemoActivity.class);
         startActivity(intent);
     }
 
