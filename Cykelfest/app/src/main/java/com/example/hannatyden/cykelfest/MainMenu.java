@@ -34,11 +34,11 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
-   /* *//** Called when the user taps the find party button *//*
+   /** Called when the user taps the find party button */
     public void findparty(View view) {
         Intent intent = new Intent(this, FindParty.class);
         startActivity(intent);
-    }*/
+    }
 
 
 }

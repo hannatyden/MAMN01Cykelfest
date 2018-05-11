@@ -13,4 +13,9 @@
     <string name="sista_anm_lningsdatum_yymmdd">Sista anmälningsdatum yymmdd</string>
     <string name="skapa_fest">Skapa Fest</string>
     <string name="title_activity_find_party">FindParty</string>
+    <string name="aktiv_fest">Aktiv Fest:</string>
+    <string name="sommarfesten">Sommarfesten</string>
+    <string name="h_ll_i_fest">Håll i Fest</string>
+    <string name="b_sta_festerna">Bästa Festerna</string>
+    <string name="hitta_fest">Hitta Fest</string>
 </resources>
