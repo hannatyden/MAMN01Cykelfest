@@ -9,10 +9,9 @@ public class Location {
     private String phoneNbr;
     private String hostName;
 
-    public Location(String address, String course, LatLng pos, String phoneNbr, String hostName){
+    public Location(String address, String course, String phoneNbr, String hostName){
         this.address = address;
         this.course = course;
-        this.pos = pos;
         this.phoneNbr = phoneNbr;
         this.hostName = hostName;
     }
@@ -25,9 +24,6 @@ public class Location {
         return course;
     }
 
-    public LatLng getPos() {
-        return pos;
-    }
 
     public String getPhoneNbr() {
         return phoneNbr;

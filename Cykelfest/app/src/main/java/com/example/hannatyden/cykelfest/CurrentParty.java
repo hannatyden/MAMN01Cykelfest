@@ -20,7 +20,7 @@ public class CurrentParty implements Serializable {
     private ArrayList<Location> locations;
 
     public CurrentParty(){
-        Location loc1 = new Location("Sölvegatan 26, 22362, Lund", "Förrätt", new LatLng(55.714799, 13.212359), "0701234567", "Hanna");
+        Location loc1 = new Location("Sölvegatan 26, 22362, Lund", "Förrätt", "0701234567", "Hanna");
         locations = new ArrayList<Location>();
         locations.add(loc1);
     }
