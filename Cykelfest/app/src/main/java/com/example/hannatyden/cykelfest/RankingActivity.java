@@ -83,8 +83,10 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     }
 
     public void okButtonPressed(View view) {
-        Intent intent = new Intent(this, HighScoreActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent();
+        intent.putExtra("editTextValue", "flag");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override

@@ -30,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -59,7 +60,9 @@ public class MyLocationDemoActivity extends FragmentActivity
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
-
+    private ArrayList<Location> locations = new ArrayList<Location>();
+    private String strEditText;
+    private Marker currentMarker;
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
     final float startSize= 100;
@@ -141,6 +144,9 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         //fult ta bort vid tillfälle
         flag = true;
+        //Location loc = new Location();
+        //locations.add(new Location("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
+
 
     }
 
@@ -170,13 +176,19 @@ public class MyLocationDemoActivity extends FragmentActivity
                 (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
         final String provider = locationManager.getBestProvider(criteria, false);
         final Location location = locationManager.getLastKnownLocation(provider);
+
         ImageButton imgbtn = (ImageButton) findViewById(R.id.bikeButton); //your button
+        final Intent i = new Intent(this, RankingActivity.class);
+
+
         imgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
-                        LatLng(location.getLatitude(),
-                        location.getLongitude()), 17));
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
+//                        LatLng(location.getLatitude(),
+//                        location.getLongitude()), 17));
+
+                startActivityForResult(i, 1);
             }
         });
 
@@ -199,7 +211,8 @@ public class MyLocationDemoActivity extends FragmentActivity
     //            .position(new LatLng(55.7206, 13.2122))
       //          .title("Fest 3 - Delphi"));
 //
-        mMap.addMarker(new MarkerOptions()
+
+        currentMarker = mMap.addMarker(new MarkerOptions()
                 .position(currentPartyLoc)
                 .title("Current party location "));
 
@@ -228,15 +241,38 @@ public class MyLocationDemoActivity extends FragmentActivity
                     Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
                     // Vibrate for 400 milliseconds
-                    v.vibrate(400);
+                    long[] pattern = { 400, 400, 400};
+                    v.vibrate(pattern , -1);
+                    //v.vibrate(400);
                     Intent intent = new Intent(context, DestInfoScreen.class);
                     startActivity(intent);
                 } else {
                     tv.setText("You are not at your party location :(");
+
+
                 }
             }
         });
 
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                strEditText = data.getStringExtra("editTextValue");
+                if(strEditText.equals("flag")){
+                    currentMarker.remove();
+
+                    currentPartyLoc = new LatLng(55.713528, 13.211162);
+                    currentMarker = mMap.addMarker(new MarkerOptions()
+                            .position(currentPartyLoc)
+                            .title("Current party location "));
+                    Log.i("tag", "flag");
+                }
+            }
+        }
     }
 
     public void onViewClick(ValueAnimator animator){
@@ -280,7 +316,6 @@ public class MyLocationDemoActivity extends FragmentActivity
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        Log.i("test", "tastststs");
         return true;
     }
 
