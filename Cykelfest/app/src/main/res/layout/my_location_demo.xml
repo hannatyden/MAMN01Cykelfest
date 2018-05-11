@@ -13,14 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/img"
         android:clickable="true"
-        android:gravity="center"
-        android:text="info"
+        android:text="Du är inte på festens destination!"
         android:textColor="@android:color/holo_green_dark"
         android:translationZ="5dp"
         android:background="@drawable/common_google_signin_btn_text_light_normal_background"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-
+        android:layout_gravity="left"
         />
 
     <fragment

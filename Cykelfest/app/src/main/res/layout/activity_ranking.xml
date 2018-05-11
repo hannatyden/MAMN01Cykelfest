@@ -30,30 +30,49 @@
         android:layout_height="147dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="70sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="79dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageButton
         android:id="@+id/okButton"
         android:layout_width="158dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@null"
         android:onClick="okButtonPressed"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ranknbr"
-        app:layout_constraintVertical_bias="0.496"
         app:srcCompat="@drawable/tickicon" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="366dp"
+        android:layout_height="304dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/scale" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt"
+        app:srcCompat="@drawable/rankingtoptest" />
 
     <ImageView
         android:id="@+id/Cursor"
@@ -62,29 +81,5 @@
         app:srcCompat="@drawable/staricon"
         tools:layout_editor_absoluteX="167dp"
         tools:layout_editor_absoluteY="244dp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="366dp"
-        android:layout_height="304dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/scale" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="358dp"
-        android:layout_height="130dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt"
-        app:srcCompat="@drawable/rankingtoptest" />
 
 </android.support.constraint.ConstraintLayout>

@@ -60,17 +60,18 @@ public class MyLocationDemoActivity extends FragmentActivity
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
-    private ArrayList<Location> locations = new ArrayList<Location>();
+    //private ArrayList<CurrentLocation> locations = new ArrayList<CurrentLocation>();
+    private CurrentLocation currentLoc;
     private String strEditText;
     private Marker currentMarker;
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
-    final float startSize= 100;
-    final float endSize = 800;
+    final float startSize= 50;
+    final float endSize = 450;
     long animationDuration = 600;
 
     // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
-    boolean infoViewOpened = false;
+    boolean infoViewOpened = true;
 
     private LatLng currentPartyLoc;
     private TextView tv;
@@ -144,9 +145,9 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         //fult ta bort vid tillfälle
         flag = true;
-        //Location loc = new Location();
-        //locations.add(new Location("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
-
+        currentLoc = new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson");
+        //locations.add(new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
+        //locations.add(new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson"));
 
     }
 
@@ -155,7 +156,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        // TODO: Before enabling the My Location layer, you must request
+        // TODO: Before enabling the My CurrentLocation layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
 
@@ -234,7 +235,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                 }
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
-                if(distance < 80E-5){
+                if(distance < 50E-5){
                     Log.i("test", "You are at your party" + distance.toString());
                     tv.setText("You are at your party location");
                     // Get instance of Vibrator from current Context
@@ -247,7 +248,9 @@ public class MyLocationDemoActivity extends FragmentActivity
                     Intent intent = new Intent(context, DestInfoScreen.class);
                     startActivity(intent);
                 } else {
-                    tv.setText("You are not at your party location :(");
+                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
+                     + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                    "Värd: " + currentLoc.getHostName());
 
 
                 }
