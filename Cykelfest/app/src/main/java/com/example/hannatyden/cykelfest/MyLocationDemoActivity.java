@@ -60,18 +60,18 @@ public class MyLocationDemoActivity extends FragmentActivity
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
-    //private ArrayList<CurrentLocation> locations = new ArrayList<CurrentLocation>();
     private CurrentLocation currentLoc;
     private String strEditText;
     private Marker currentMarker;
+
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
-    final float startSize= 50;
-    final float endSize = 450;
+    final float startSize= 150;
+    final float endSize = 500;
     long animationDuration = 600;
 
     // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
-    boolean infoViewOpened = true;
+    boolean infoViewOpened = false;
 
     private LatLng currentPartyLoc;
     private TextView tv;
@@ -88,9 +88,10 @@ public class MyLocationDemoActivity extends FragmentActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         gestureScanner = new GestureDetector(this);
 
-
         tv = findViewById(R.id.info);
         tv.bringToFront();
+        tv.setHeight(150);
+
 
 
         //mMap.setMyLocationEnabled(true);
@@ -238,7 +239,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                 Log.i("test", distance.toString());
                 if(distance < 50E-5){
                     Log.i("test", "You are at your party" + distance.toString());
-                    tv.setText("You are at your party location");
+                    tv.setText("Du har kommit till festens destination!");
                     // Get instance of Vibrator from current Context
                     Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -270,6 +271,11 @@ public class MyLocationDemoActivity extends FragmentActivity
                     currentMarker.remove();
 
                     currentPartyLoc = new LatLng(55.713528, 13.211162);
+                    currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
+                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
+                            + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                            "Värd: " + currentLoc.getHostName());
+
                     currentMarker = mMap.addMarker(new MarkerOptions()
                             .position(currentPartyLoc)
                             .title("Current party location "));
