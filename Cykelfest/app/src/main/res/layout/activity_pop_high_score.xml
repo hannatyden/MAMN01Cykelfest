@@ -7,10 +7,10 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="253dp"
-        android:layout_height="133dp"
+        android:layout_width="268dp"
+        android:layout_height="239dp"
         android:layout_centerInParent="true"
-        android:text="Du har nu en ny plats att ta dig till för nästa rätt! Se kartan för att ta dig till rätt plats."
+        android:text="Här kan du se de tre högst rankade festerna just nu! Efter varje rätt rankar deltagarna delfesten. Cykelfestens totala poäng visas här!"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold" />

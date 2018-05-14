@@ -10,7 +10,8 @@
         android:layout_width="259dp"
         android:layout_height="325dp"
         android:layout_centerInParent="true"
-        android:text="En cykelfest går till som så att man äter förätt, huvudrätt och efterrätt på tre olika ställen med tre olika sällskap. Hur fantastiskt låter inte det?! Skapa antingen en egen cykelfest eller signa upp dig på en redan existerande fest!"
+        android:text="En cykelfest går till som så att man äter förätt, huvudrätt och efterrätt på tre olika ställen med tre olika sällskap.
+         Under 'Fester' kan du anmäla dig till redan existerande fester eller skapa din egen cykelfest!"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="24sp"
