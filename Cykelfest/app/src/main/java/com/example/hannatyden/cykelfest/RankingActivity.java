@@ -224,7 +224,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
 
             //draw image
             String debugString = ("Score X : " + scoreX + "\n Score Y : " + scoreY + "\n xpos: " + xpos + "\n ypos: " + ypos + "\nx: " + cursor.getX() + "\nY: " + cursor.getY());
-            textView.setText(debugString);
+            textView.setText("");
 
         }
 

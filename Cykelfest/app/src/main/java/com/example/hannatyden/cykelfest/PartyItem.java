@@ -68,6 +68,32 @@ public class PartyItem implements Parcelable {
         endDate = parcel.readString();
     }
 
+    public void setTheme(String s){
+        this.theme = s;
+    }
+
+    public void setName(String s){
+        this.theme = s;
+    }
+
+    public void setAddress(String s){
+        this.theme = s;
+    }
+
+    public void setDate(String s){
+        this.theme = s;
+    }
+
+    public void setMax(String s){
+        this.theme = s;
+    }
+
+    public void setEndDate(String s){
+        this.theme = s;
+    }
+
+
+
     //creator - used when un-parceling our parcle (creating the object)
     public static final Parcelable.Creator<PartyItem> CREATOR = new Parcelable.Creator<PartyItem>(){
 
