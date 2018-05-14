@@ -15,6 +15,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -85,8 +86,13 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     public void okButtonPressed(View view) {
         Intent intent = new Intent();
         intent.putExtra("editTextValue", "flag");
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
@@ -151,10 +157,10 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 cursor.setX(centerX - xpos);
             }
 
-            if (ypos < -120){
-                cursor.setY(750);
-            } else if (ypos > 515){
-                cursor.setY(1360);
+            if (ypos < 30){
+                cursor.setY(900);
+            } else if (ypos > 665){
+                cursor.setY(1510);
             } else {
                 cursor.setY(centerY + ypos);
             }
@@ -197,9 +203,9 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
                 g = 1;
             }
 
-            float tempX = (cursor.getX() - 180)/(62*2);
-            float tempY = (1350 - cursor.getY())/(65*2);
-            if(cursor.getY() == 750) {
+            float tempX = (cursor.getX() - 150)/(62*2);
+            float tempY = (1500 - cursor.getY())/(65*2);
+            if(cursor.getY() == 900) {
                 tempY = 5f;
             }
             float totalscoreF = tempX + tempY;
@@ -218,7 +224,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
 
             //draw image
             String debugString = ("Score X : " + scoreX + "\n Score Y : " + scoreY + "\n xpos: " + xpos + "\n ypos: " + ypos + "\nx: " + cursor.getX() + "\nY: " + cursor.getY());
-            textView.setText(debugString);
+            textView.setText("");
 
         }
 

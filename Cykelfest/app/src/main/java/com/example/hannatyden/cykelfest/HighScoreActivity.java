@@ -1,12 +1,15 @@
 package com.example.hannatyden.cykelfest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +49,15 @@ public class HighScoreActivity extends AppCompatActivity {
                 //TODO return 1 if rhs should be before lhs
                 //     return -1 if lhs should be before rhs
                 //     return 0 otherwise
+            }
+        });
+
+        final ImageButton ib = (ImageButton) findViewById(R.id.imageButtonInfo);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HighScoreActivity.this, PopHighScore.class));
+                ib.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         });
 

@@ -1,9 +1,5 @@
 package com.example.hannatyden.cykelfest;
 
-import android.os.Parcelable;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,15 +13,15 @@ public class CurrentParty implements Serializable {
     private String phoneNbr;
     private String adress;
 
-    private ArrayList<Location> locations;
+    private ArrayList<CurrentLocation> locations;
 
     public CurrentParty(){
-        Location loc1 = new Location("Sölvegatan 26, 22362, Lund", "Förrätt", "0701234567", "Hanna");
-        locations = new ArrayList<Location>();
+        CurrentLocation loc1 = new CurrentLocation("Sölvegatan 26, 22362, Lund", "Förrätt", "0701234567", "Hanna");
+        locations = new ArrayList<CurrentLocation>();
         locations.add(loc1);
     }
 
-    public ArrayList<Location> getLocations() {
+    public ArrayList<CurrentLocation> getLocations() {
         return locations;
     }
 }

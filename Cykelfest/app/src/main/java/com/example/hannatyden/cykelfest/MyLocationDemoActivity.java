@@ -60,13 +60,14 @@ public class MyLocationDemoActivity extends FragmentActivity
     GestureDetector gestureScanner;
     ValueAnimator animateToBigger;
     ValueAnimator animateToSmaller;
-    private ArrayList<Location> locations = new ArrayList<Location>();
+    private CurrentLocation currentLoc;
     private String strEditText;
     private Marker currentMarker;
+
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
-    final float startSize= 100;
-    final float endSize = 800;
+    final float startSize= 150;
+    final float endSize = 500;
     long animationDuration = 600;
 
     // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
@@ -87,9 +88,10 @@ public class MyLocationDemoActivity extends FragmentActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         gestureScanner = new GestureDetector(this);
 
-
         tv = findViewById(R.id.info);
         tv.bringToFront();
+        tv.setHeight(150);
+
 
 
         //mMap.setMyLocationEnabled(true);
@@ -144,9 +146,9 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         //fult ta bort vid tillfälle
         flag = true;
-        //Location loc = new Location();
-        //locations.add(new Location("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
-
+        currentLoc = new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson");
+        //locations.add(new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
+        //locations.add(new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson"));
 
     }
 
@@ -155,7 +157,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        // TODO: Before enabling the My Location layer, you must request
+        // TODO: Before enabling the My CurrentLocation layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
 
@@ -189,7 +191,8 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
 
-                startActivityForResult(i, 1);
+                startActivity(i);
+               // startActivityForResult(i, 1);
             }
         });
 
@@ -235,9 +238,9 @@ public class MyLocationDemoActivity extends FragmentActivity
                 }
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
-                if(distance < 80E-5){
+                if(distance < 50E-5){
                     Log.i("test", "You are at your party" + distance.toString());
-                    tv.setText("You are at your party location");
+                    tv.setText("Du har kommit till festens destination!");
                     // Get instance of Vibrator from current Context
                     Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -245,10 +248,15 @@ public class MyLocationDemoActivity extends FragmentActivity
                     long[] pattern = { 400, 400, 400};
                     v.vibrate(pattern , -1);
                     //v.vibrate(400);
-                    Intent intent = new Intent(context, DestInfoScreen.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(context, DestInfoScreen.class);
+//                    startActivity(intent);
+
+                    startActivityForResult(i, 1);
+
                 } else {
-                    tv.setText("You are not at your party location :(");
+                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
+                     + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                    "Värd: " + currentLoc.getHostName());
 
 
                 }
@@ -267,6 +275,11 @@ public class MyLocationDemoActivity extends FragmentActivity
                     currentMarker.remove();
 
                     currentPartyLoc = new LatLng(55.713528, 13.211162);
+                    currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
+                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
+                            + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                            "Värd: " + currentLoc.getHostName());
+
                     currentMarker = mMap.addMarker(new MarkerOptions()
                             .position(currentPartyLoc)
                             .title("Current party location "));

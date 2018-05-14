@@ -72,7 +72,12 @@ public class FindParty extends AppCompatActivity {
         });
 
         TextView tv = (TextView) findViewById(R.id.textview);
-        
+
+
+        partyItems.add(new PartyItem("Vinter", "Vinterfesten", "181011", "Gatan 1", "50", "181001"));
+        parties.add(partyItems.get(0).name);
+
+
     }
 
     @Override
