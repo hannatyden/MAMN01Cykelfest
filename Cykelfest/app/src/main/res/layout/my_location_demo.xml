@@ -36,7 +36,8 @@
         android:id="@+id/bikeButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        android:alpha="0"/>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -44,9 +45,6 @@
         android:layout_height="50dp"
         android:src="@drawable/swipeicon"
         android:translationZ="10dp" /><![CDATA[
-
-
-
 
 
     android:layout_width="368dp"

@@ -221,10 +221,10 @@ public class MyLocationDemoActivity extends FragmentActivity
                 .title("Current party location "));
 
 
-
-
-        LatLng origin = (new LatLng(location.getLatitude(), location.getLongitude()));
-        LatLng dest = currentPartyLoc;
+//
+//
+//        LatLng origin = (new LatLng(location.getLatitude(), location.getLongitude()));
+//        LatLng dest = currentPartyLoc;
 
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
