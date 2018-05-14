@@ -55,12 +55,13 @@
                 android:value=".MainMenu" />
         </activity>
         <activity android:name=".FindParty" />
-        <activity android:name=".Pop"
-            android:theme="@style/AppTheme.CustomTheme"
-            ></activity>
-        <activity android:name=".Pop2"
-            android:theme="@style/AppTheme.CustomTheme"
-            ></activity>
+        <activity
+            android:name=".Pop"
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity
+            android:name=".Pop2"
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity android:name=".PartyInfoPopUp"></activity>
     </application>
 
 </manifest>
