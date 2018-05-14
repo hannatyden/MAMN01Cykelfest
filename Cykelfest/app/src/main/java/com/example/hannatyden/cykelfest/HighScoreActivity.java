@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HighScoreActivity extends AppCompatActivity {
-
+    int counter = 1;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +81,12 @@ public class HighScoreActivity extends AppCompatActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_name, parent, false);
             }
             // Lookup view for data population
-
+            TextView tvPosition = (TextView) convertView.findViewById(R.id.tvPosition);
             TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
             TextView tvHome = (TextView) convertView.findViewById(R.id.tvScore);
             // Populate the data into the template view using the data object
+            tvPosition.setText(Integer.toString(counter));
+            counter++;
             tvName.setText(item.name);
             tvHome.setText(Integer.toString(item.score));
             // Return the completed view to render on screen
