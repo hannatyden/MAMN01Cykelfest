@@ -18,7 +18,8 @@
         android:textColor="@android:color/holo_green_dark"
         android:textSize="20sp"
         android:translationZ="5dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <fragment
         android:id="@+id/map"
@@ -30,11 +31,11 @@
         tools:layout_editor_absoluteY="100dp"
         tools:layout_width="match_parent" />
 
+
     <ImageButton
         android:id="@+id/bikeButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/bad"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="bottom" />
 
     <ImageView

@@ -191,7 +191,8 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
 
-                startActivityForResult(i, 1);
+                startActivity(i);
+               // startActivityForResult(i, 1);
             }
         });
 
@@ -247,8 +248,11 @@ public class MyLocationDemoActivity extends FragmentActivity
                     long[] pattern = { 400, 400, 400};
                     v.vibrate(pattern , -1);
                     //v.vibrate(400);
-                    Intent intent = new Intent(context, DestInfoScreen.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(context, DestInfoScreen.class);
+//                    startActivity(intent);
+
+                    startActivityForResult(i, 1);
+
                 } else {
                     tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
                      + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +

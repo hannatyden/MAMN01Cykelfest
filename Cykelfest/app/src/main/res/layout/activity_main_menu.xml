@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hannatyden.cykelfest.MainMenu"
-    android:background="@android:color/white">
+    android:background="@drawable/backgroundexperiment"
+    tools:context="com.example.hannatyden.cykelfest.MainMenu">
 
     <Button
         android:id="@+id/button1"
@@ -14,6 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/button_border"
         android:onClick="findparty"
         android:text="@string/hitta_fest"
         app:layout_constraintBottom_toTopOf="@+id/button2"
@@ -29,7 +30,8 @@
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:onClick="rankingButton"
+        android:background="@drawable/button_border"
+        android:onClick="highscoreButton"
         android:text="@string/b_sta_festerna"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +42,11 @@
     <Button
         android:id="@+id/button3"
         android:layout_width="150dp"
-        android:layout_height="48dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="90dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/button_border"
         android:onClick="createparty"
         android:text="@string/h_ll_i_fest"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,34 +57,34 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="150dp"
-        android:layout_height="47dp"
+        android:layout_width="199dp"
+        android:layout_height="75dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/button_border"
         android:onClick="kartaButton"
         android:text="@string/sommarfesten"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/button1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="108dp"
-        android:layout_height="32dp"
+        android:layout_width="123dp"
+        android:layout_height="31dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="90dp"
-        android:text="@string/aktiv_fest"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView
@@ -90,8 +93,7 @@
         android:layout_height="129dp"
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/launchericon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -101,6 +103,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/button_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.974"
@@ -108,5 +111,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="345dp"
+        android:layout_height="69dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cykelfest2" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="284dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/aktivfest" />
 
 </android.support.constraint.ConstraintLayout>
