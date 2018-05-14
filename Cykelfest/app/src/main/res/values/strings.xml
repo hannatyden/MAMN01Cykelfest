@@ -19,4 +19,5 @@
     <string name="b_sta_festerna">Bästa Festerna</string>
     <string name="hitta_fest">Hitta Fest</string>
     <string name="fester">Fester</string>
+    <string name="v_nligen_fyll_i_alla_obligatoriska_f_lt">Vänligen fyll i alla obligatoriska fält :)</string>
 </resources>
