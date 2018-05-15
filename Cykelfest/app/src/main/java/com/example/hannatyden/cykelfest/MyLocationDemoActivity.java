@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MyLocationDemoActivity extends FragmentActivity
         implements GoogleMap.OnMyLocationButtonClickListener,
@@ -64,12 +66,13 @@ public class MyLocationDemoActivity extends FragmentActivity
     private String strEditText;
 
     private Marker currentMarker;
-
+    private boolean secondDestination = false;
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
     final float startSize= 150;
     final float endSize = 500;
     long animationDuration = 600;
+    private TextToSpeech tts;
 
     // Boolean som används för att kolla ifall info-boxen är förstorad eller förminskad
     boolean infoViewOpened = false;
@@ -93,7 +96,12 @@ public class MyLocationDemoActivity extends FragmentActivity
         tv.bringToFront();
         tv.setHeight(150);
 
+        tts = new TextToSpeech(MyLocationDemoActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
 
+            }
+        });
 
         //mMap.setMyLocationEnabled(true);
 
@@ -186,7 +194,9 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
 
-                startActivity(i);
+
+
+               // startActivity(i);
                // startActivityForResult(i, 1);
             }
         });
@@ -234,6 +244,10 @@ public class MyLocationDemoActivity extends FragmentActivity
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
                 if(distance < 50E-5){
+
+                    tts.setLanguage(Locale.US);
+                    tts.speak("You have arrived to the party", TextToSpeech.QUEUE_ADD, null);
+
                     Log.i("test", "You are at your party" + distance.toString());
                     tv.setText("Du har kommit till festens destination!");
                     // Get instance of Vibrator from current Context
@@ -264,33 +278,50 @@ public class MyLocationDemoActivity extends FragmentActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 strEditText = data.getStringExtra("editTextValue");
-                if(strEditText.equals("flag")){
-                    currentMarker.remove();
+                if (strEditText.equals("flag")) {
+                    if (!secondDestination) {
+                        currentMarker.remove();
+                        secondDestination = true;
+                        currentPartyLoc = new LatLng(55.713528, 13.211162);
+                        currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
+                        tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
+                                + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                                "Värd: " + currentLoc.getHostName());
 
-                    currentPartyLoc = new LatLng(55.713528, 13.211162);
-                    currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
-                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
-                            + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                            "Värd: " + currentLoc.getHostName());
+                        currentMarker = mMap.addMarker(new MarkerOptions()
+                                .position(currentPartyLoc)
+                                .title("Current party location "));
+                        Log.i("tag", "flag");
 
-                    currentMarker = mMap.addMarker(new MarkerOptions()
-                            .position(currentPartyLoc)
-                            .title("Current party location "));
-                    Log.i("tag", "flag");
+                        //pop up som säger att man nu ska ta sig till en annan location
+                        startActivity(new Intent(MyLocationDemoActivity.this, Pop2.class));
 
-                    //pop up som säger att man nu ska ta sig till en annan location
-                    startActivity(new Intent(MyLocationDemoActivity.this, Pop2.class));
+                        ImageButton ib = (ImageButton) findViewById(R.id.bikeButton);
+                        ib.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
 
-                    ImageButton ib = (ImageButton) findViewById(R.id.bikeButton);
-                    ib.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                            }
+                        });
 
-                        }
-                    });
+                    } else {
+                        currentMarker.remove();
 
+                        currentPartyLoc = new LatLng(55.697738, 13.186190);
+                        currentLoc = new CurrentLocation("Stadsparken", "Efterrätt", "0724003631", "Filip Stjernström");
+                        tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
+
+                                + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                                "Värd: " + currentLoc.getHostName());
+
+                        currentMarker = mMap.addMarker(new MarkerOptions()
+                                .position(currentPartyLoc)
+                                .title("Current party location "));
+
+                        startActivity(new Intent(MyLocationDemoActivity.this, Pop2.class));
+                    }
                 }
             }
         }

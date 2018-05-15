@@ -61,12 +61,13 @@
         <activity
             android:name=".Pop2"
             android:theme="@style/AppTheme.CustomTheme" />
-
-        <activity android:name=".PartyInfoPopUp"/>
-        
+        <activity
+            android:name=".Pop3"
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity android:name=".PartyInfoPopUp" />
         <activity
             android:name=".PopHighScore"
-            android:theme="@style/AppTheme.CustomTheme"/>
+            android:theme="@style/AppTheme.CustomTheme" />
     </application>
 
 </manifest>

@@ -48,55 +48,33 @@ public class CreateParty extends AppCompatActivity{
 
 
     public void skapafestbutton(View view) {
-        Intent intent = new Intent();
-        vibe.vibrate(80);
-        ArrayList<String> party = new ArrayList<String>();
-        party.add(editText.getText().toString());
-        party.add(editText2.getText().toString());
-        party.add(editText3.getText().toString());
-        party.add(editText4.getText().toString());
-        party.add(editText6.getText().toString());
-        party.add(editText7.getText().toString());
+        if(editText.getText().toString().equals("Tema") || editText.getText().toString().equals("")
+                || editText2.getText().toString().equals("Festnamn") || editText2.getText().toString().equals("")
+                || editText3.getText().toString().equals("Datum yymmdd") || editText3.getText().toString().equals("")
+                || editText4.getText().toString().equals("Plats") || editText4.getText().toString().equals("")
+                || editText6.getText().toString().equals("Max antal personer") || editText6.getText().toString().equals("")
+                || editText7.getText().toString().equals("Sista anmälningsdatum yymmdd") || editText7.getText().toString().equals("")){
+            //skriva ut ett meddelande om att fälten inte är ifyllda
+            startActivity(new Intent(this, Pop3.class));
 
-        intent.putStringArrayListExtra("partyArray", party);
-        setResult(RESULT_OK, intent);
-        finish();
-        System.out.println(party);
+        } else {
+            Intent intent = new Intent();
+            vibe.vibrate(80);
+            ArrayList<String> party = new ArrayList<String>();
+            party.add(editText.getText().toString());
+            party.add(editText2.getText().toString());
+            party.add(editText3.getText().toString());
+            party.add(editText4.getText().toString());
+            party.add(editText6.getText().toString());
+            party.add(editText7.getText().toString());
+
+            intent.putStringArrayListExtra("partyArray", party);
+            setResult(RESULT_OK, intent);
+            finish();
+            System.out.println(party);
+
+        }
+
     }
-
-
-
-
-//    /** Called when the user taps the Accelerometer button */
-//    public void skapafestbutton(View view) {
-//        if(editText.getText().toString().equals("Tema") || editText.getText().toString().equals("")
-//                || editText2.getText().toString().equals("Festnamn") || editText2.getText().toString().equals("")
-//                || editText3.getText().toString().equals("Datum yymmdd") || editText3.getText().toString().equals("")
-//                || editText4.getText().toString().equals("Plats") || editText4.getText().toString().equals("")
-//                || editText6.getText().toString().equals("Max antal personer") || editText6.getText().toString().equals("")
-//                || editText7.getText().toString().equals("Sista anmälningsdatum yymmdd") || editText7.getText().toString().equals("")){
-//            //skriva ut ett meddelande om att fälten inte är ifyllda
-//        } else {
-//           // PartyItem pi = new PartyItem("1","2","3","4", "5" , "6");
-//            Intent intent = new Intent(CreateParty.this, FindParty.class);
-//            PartyItem partyItem = intent.getParcelableExtra("Party");
-//            intent.putExtra("Party", partyItem);
-//            startActivity(intent);
-//            Intent intent = new Intent();
-//            ArrayList<String> partyinfo = new ArrayList<>();
-//            partyinfo.add(editText.getText().toString());
-//            partyinfo.add(editText2.getText().toString());
-//            partyinfo.add(editText3.getText().toString());
-//            partyinfo.add(editText4.getText().toString());
-//            partyinfo.add(editText6.getText().toString());
-//            partyinfo.add(editText7.getText().toString());
-//            intent.putStringArrayListExtra("PartyArray", partyinfo);
-//            setResult(RESULT_OK, intent);
-//            finish();
-//            System.out.println("SENT PARTY INFO");
-//        }
-
-
-//    }
 
 }

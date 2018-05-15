@@ -31,7 +31,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private ImageButton okButton;
     private Display display;
     private ImageView cursor;
-
+    private boolean secondDestination = false;
     private ConstraintLayout layout;
     private int scoreX;
     private int scoreY;
@@ -84,11 +84,11 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     }
 
     public void okButtonPressed(View view) {
-        Intent intent = new Intent();
-        intent.putExtra("editTextValue", "flag");
-        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        setResult(RESULT_OK, intent);
-        finish();
+            Intent intent = new Intent();
+            intent.putExtra("editTextValue", "flag");
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            setResult(RESULT_OK, intent);
+            finish();
     }
 
     @Override
