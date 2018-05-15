@@ -62,6 +62,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     ValueAnimator animateToSmaller;
     private CurrentLocation currentLoc;
     private String strEditText;
+
     private Marker currentMarker;
 
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
@@ -156,7 +157,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(55.713782, 13.211657) , 15.7f));
         // TODO: Before enabling the My CurrentLocation layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
@@ -172,12 +173,6 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
-
-        final Criteria criteria = new Criteria();
-        final LocationManager locationManager =
-                (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-        final String provider = locationManager.getBestProvider(criteria, false);
-        final Location location = locationManager.getLastKnownLocation(provider);
 
         ImageButton imgbtn = (ImageButton) findViewById(R.id.bikeButton); //your button
         final Intent i = new Intent(this, RankingActivity.class);
@@ -231,11 +226,11 @@ public class MyLocationDemoActivity extends FragmentActivity
             public void onMyLocationChange(Location location) {
                 Double curLat = location.getLatitude();
                 Double curLong = location.getLongitude();
-                if(flag) {
-                     CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 18);
-                     mMap.animateCamera(cu);
-                     flag = !flag;
-                }
+//                if(flag) {
+//                     CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 18);
+//                     mMap.animateCamera(cu);
+//                     flag = !flag;
+//                }
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
                 if(distance < 50E-5){

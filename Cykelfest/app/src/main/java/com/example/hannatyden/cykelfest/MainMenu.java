@@ -1,6 +1,7 @@
 package com.example.hannatyden.cykelfest;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
@@ -45,6 +46,7 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = new Intent(this, MyLocationDemoActivity.class);
         view.startAnimation(buttonClick);
         startActivity(intent);
+
     }
 
 

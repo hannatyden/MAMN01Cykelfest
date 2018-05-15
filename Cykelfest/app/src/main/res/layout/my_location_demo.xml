@@ -41,9 +41,9 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="52dp"
-        android:layout_height="50dp"
-        android:src="@drawable/swipeicon"
+        android:layout_width="53dp"
+        android:layout_height="48dp"
+        android:src="@drawable/swipedownv4"
         android:translationZ="10dp" /><![CDATA[
 
 
