@@ -338,6 +338,16 @@ public class MyLocationDemoActivity extends FragmentActivity
         Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
+    public void arrowButtonPressed(View view) {
+        if(infoViewOpened){
+            animateToSmaller.start();
+            infoViewOpened = false;
+        } else {
+            animateToBigger.start();
+            infoViewOpened = true;
+        }
+    }
+
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
