@@ -253,7 +253,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
                 if(!destInfoOpened) {
-                    if (distance < 50E-5) {
+                    if (distance < 50E-5) { //destination reached
 
                         arrowButton.setVisibility(View.INVISIBLE);
                         tv.setVisibility(View.INVISIBLE);
