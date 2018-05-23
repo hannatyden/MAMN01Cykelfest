@@ -1,8 +1,11 @@
 package com.example.hannatyden.cykelfest;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,15 +13,17 @@ import android.widget.TextView;
 public class PartyInfoPopUp extends AppCompatActivity {
     private Button button;
     private boolean attending;
-
+    private String val1;
+    private Vibrator vibe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_info_pop_up);
         button = (Button) findViewById(R.id.ButtonX);
+        vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
         Intent intent = getIntent();
-        String val1 = intent.getStringExtra("1");
+         val1 = intent.getStringExtra("1");
         String val2 = intent.getStringExtra("2");
         String val3 = intent.getStringExtra("3");
         String val4 = intent.getStringExtra("4");
@@ -48,6 +53,36 @@ public class PartyInfoPopUp extends AppCompatActivity {
             button.setText("Anmäl dig från festen");
             attending = false;
         }
+        vibe.vibrate(80);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        if(attending) {
+            intent.putExtra("1", "yes");
+            intent.putExtra("2", val1);
+        }
+        else {
+            intent.putExtra("1", "no");
+            intent.putExtra("2", val1);
+
+        }
+
+
+        System.out.println("Sending data");
+        Log.i("1", "Sending Data");
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
+
+
+
     }
 
 }

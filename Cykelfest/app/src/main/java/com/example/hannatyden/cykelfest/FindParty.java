@@ -68,7 +68,7 @@ public class FindParty extends AppCompatActivity {
             intent.putExtra("6", partyItems.get(position).endDate);
             intent.putExtra("7", partyItems.get(position).attending);
 
-            startActivity(intent);
+            startActivityForResult(intent, 2);
         }
         });
 
@@ -111,9 +111,10 @@ public class FindParty extends AppCompatActivity {
 
     }
 
-
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("BEFORE: ON-ACTIVITY-RESULT FOR party ACTIVITY");
+
         if (requestCode == 1) {
             System.out.println("ResultCode = " + resultCode + " Result OK: " + RESULT_OK);
 
@@ -132,6 +133,25 @@ public class FindParty extends AppCompatActivity {
                 }
 
                 arrayAdapter.notifyDataSetChanged();
+
+            }
+        } else if (requestCode == 2) {
+            System.out.println("Recieved request 2");
+            System.out.println(resultCode);
+            if (resultCode == RESULT_OK) {
+
+                String a = data.getStringExtra("1");
+                String b = data.getStringExtra("2");
+                System.out.println(a);
+                System.out.println(b);
+                for (PartyItem p : partyItems) {
+                    if (p.getName().equals(b)) {
+                        p.setAttending(a);
+                        System.out.println(p.getName());
+
+
+                    }
+                }
 
             }
         }
