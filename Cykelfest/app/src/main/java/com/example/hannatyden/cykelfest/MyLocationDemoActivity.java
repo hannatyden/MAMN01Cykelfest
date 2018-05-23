@@ -97,7 +97,7 @@ public class MyLocationDemoActivity extends FragmentActivity
         setContentView(R.layout.my_location_demo);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        //gestureScanner = new GestureDetector(this);
+        gestureScanner = new GestureDetector(this);
 
         tv = findViewById(R.id.info);
         tv.bringToFront();
@@ -155,12 +155,12 @@ public class MyLocationDemoActivity extends FragmentActivity
         });
 
         // Listener som läggs till info TextView:n och läser av rörelser
-//        tv.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event){
-//                return gestureScanner.onTouchEvent(event);
-//            }
-//        });
+        tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                return gestureScanner.onTouchEvent(event);
+            }
+        });
 
         mapFragment.getMapAsync(this);
 
@@ -207,6 +207,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                 arrowButton.setVisibility(View.INVISIBLE);
                 tv.setVisibility(View.INVISIBLE);
                 tv.setHeight(150);
+                infoViewOpened = false;
 
                 destInfo.setVisibility(View.VISIBLE);
                 goToRanking.setVisibility(View.VISIBLE);
@@ -452,13 +453,13 @@ public class MyLocationDemoActivity extends FragmentActivity
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-//        if(infoViewOpened){
-//            animateToSmaller.start();
-//            infoViewOpened = false;
-//        } else {
-//            animateToBigger.start();
-//            infoViewOpened = true;
-//        }
+        if(infoViewOpened){
+            animateToSmaller.start();
+            infoViewOpened = false;
+        } else {
+            animateToBigger.start();
+            infoViewOpened = true;
+        }
 
         return true;
     }
