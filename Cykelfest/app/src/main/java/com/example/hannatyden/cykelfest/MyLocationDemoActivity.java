@@ -196,10 +196,12 @@ public class MyLocationDemoActivity extends FragmentActivity
 
 
 
-               // startActivity(i);
-               // startActivityForResult(i, 1);
+                //startActivity(i);
+                startActivityForResult(i, 1);
             }
         });
+
+
 
 
        // mMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -207,19 +209,6 @@ public class MyLocationDemoActivity extends FragmentActivity
         currentPartyLoc = new LatLng(55.714799, 13.212359); //IKDC
 
 
-
-       // mMap.addMarker(new MarkerOptions()
-       //         .position(new LatLng(55.7091, 13.2142))
-       //         .title("Fest 1 - Sparta"));
-//
-  //      mMap.addMarker(new MarkerOptions()
-    //            .position(new LatLng(55.7053, 13.1868))
-      //          .title("Fest 2 - Centralen"));
-//
-  //      mMap.addMarker(new MarkerOptions()
-    //            .position(new LatLng(55.7206, 13.2122))
-      //          .title("Fest 3 - Delphi"));
-//
 
         currentMarker = mMap.addMarker(new MarkerOptions()
                 .position(currentPartyLoc)
@@ -398,6 +387,7 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         return true;
     }
+
 
 
 }

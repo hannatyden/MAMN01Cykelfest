@@ -14,9 +14,11 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private TextView textView;
     private ImageView image;
     private TextView rank_nbr;
-    private ImageButton okButton;
+    private Button okButton;
     private Display display;
     private ImageView cursor;
     private boolean secondDestination = false;
@@ -37,6 +39,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private int scoreY;
     private int width;
     private int height;
+    private Button backButton;
 
 
     private float vals[] = new float[2];
@@ -60,34 +63,49 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
         image = (ImageView) findViewById(R.id.img);
         rank_nbr = (TextView) findViewById(R.id.ranknbr);
         layout = (ConstraintLayout) findViewById(R.id.RankingActivityLayout);
-        okButton = (ImageButton) findViewById(R.id.okButton);
+        okButton = (Button) findViewById(R.id.okButton);
+        backButton = (Button) findViewById(R.id.backButton);
         okButton.setVisibility(View.INVISIBLE);
+        backButton.setVisibility(View.INVISIBLE);
         display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         width = size.x;
         height = size.y - 400;
 
+
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //Anropas när man clickar någonstans på skärmen under aktiviteten.
-                counter++;
-                textView.setText("I have been clicked: " + counter + " times");
-                isClicked = !isClicked;
+             //   counter++;
+              //  textView.setText("I have been clicked: " + counter + " times");
+                isClicked = true;
                 if(isClicked) {
+                    Log.i("1" , "I have been pressed");
                     okButton.setVisibility(View.VISIBLE);
-                } else {
-                    okButton.setVisibility(View.INVISIBLE);
+                    backButton.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+    }
+
+    public void backButtonPressed(View view){
+
+        okButton.setVisibility(View.INVISIBLE);
+        backButton.setVisibility(View.INVISIBLE);
+        isClicked = false;
+
     }
 
     public void okButtonPressed(View view) {
+
             Intent intent = new Intent();
             intent.putExtra("editTextValue", "flag");
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             setResult(RESULT_OK, intent);
+            isClicked = false;
+            Log.i("2", "Is finishing");
             finish();
     }
 
@@ -113,33 +131,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             float y = vals[1];
             float g;
             float r;
-/**
-            if (x < 0) {
-                r = (1 - (-x) / 7);
-                if (r < 0) {
-                    r = 0;
-                }
-                g = 1;
-                getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
-               textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
-            }
-            if (x > 0) {
-                g = (1 - x / 7);
-                r = 1;
-                if (g < 0) {
-                    g = 0;
-                }
-                getWindow().getDecorView().setBackgroundColor(Color.rgb(r, g, 0));
-                textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
-            }
 
-            if (x > (-1) && x < (1) && y > (-1) && y < (1)) {
-                getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
-                r = 1;
-                g = 1;
-            textView.setText("x: " + x + "\n y: " + y + "\n r: " + r + "\n g: " + g + "\n alpha: " + alpha);
-            }
- */
             float xTrans = width/17;
             float yTrans = height/17;
 
@@ -166,19 +158,6 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             }
 
 
-
-
-            /*
-            if(xpos < 0) {
-                xpos = -xpos;
-            }
-
-            if(ypos < 0) {
-                ypos = -ypos;
-            }
-            */
-//            cursor.setX(centerX-xpos);
- //           cursor.setY(centerY+ypos);
             r = 1;
             g = 1;
 
@@ -213,13 +192,6 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             scoreY = (int) tempY;
             int totalscore = (int) totalscoreF;
             rank_nbr.setText("" + (totalscore));
-
-            //Försök att påverka hastigheten på x, fungerar inte som tänkt kanske inte behövs, fråga gruppen
-//        if(alpha > 0.1) {
-//            alpha = Math.abs(x) / 20;
-//        } else {
-//            alpha = 0.1f;
-//        }
 
 
             //draw image
