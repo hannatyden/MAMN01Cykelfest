@@ -47,10 +47,10 @@ public class PartyInfoPopUp extends AppCompatActivity {
 
     public void onClick(View view) {
         if(!attending) {
-            button.setText("Avanmäl dig till festen");
+            button.setText("Avanmäl dig från festen");
             attending = true;
         } else {
-            button.setText("Anmäl dig från festen");
+            button.setText("Anmäl dig till festen");
             attending = false;
         }
         vibe.vibrate(80);
