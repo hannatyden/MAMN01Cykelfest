@@ -118,6 +118,10 @@ public class MyLocationDemoActivity extends FragmentActivity
         goToRanking.setVisibility(View.INVISIBLE);
 
 
+        currentLoc = new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson");
+        tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
+                + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                "Värd: " + currentLoc.getHostName() + "\n \n" +"För vägledning: \n  1. Klicka på den röda markören på kartan. \n" + "2. Klicka på den lilla pilen nere i högra hörnet.");
         //mMap.setMyLocationEnabled(true);
 
 /*
@@ -166,7 +170,7 @@ public class MyLocationDemoActivity extends FragmentActivity
 
         //fult ta bort vid tillfälle
         flag = true;
-        currentLoc = new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson");
+
         //locations.add(new CurrentLocation("IKDC", "Förrätt", "0723153789", "Sven Svensson"));
         //locations.add(new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson"));
 
