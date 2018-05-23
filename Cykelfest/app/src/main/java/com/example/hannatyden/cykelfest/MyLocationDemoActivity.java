@@ -258,7 +258,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                         arrowButton.setVisibility(View.INVISIBLE);
                         tv.setVisibility(View.INVISIBLE);
                         tv.setHeight(150);
-
+                        infoViewOpened = false;
 
                         destInfo.setVisibility(View.VISIBLE);
                         goToRanking.setVisibility(View.VISIBLE);
