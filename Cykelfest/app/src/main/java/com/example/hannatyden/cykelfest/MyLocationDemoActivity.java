@@ -129,10 +129,6 @@ public class MyLocationDemoActivity extends FragmentActivity
 
 
 
-
-
-
-
         //Animation som gör info-boxen större ifall en rörelse görs på boxen
         animateToBigger = ValueAnimator.ofFloat(startSize, endSize);
         animateToBigger.setDuration(animationDuration);
@@ -208,12 +204,15 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
+                arrowButton.setVisibility(View.INVISIBLE);
+                tv.setVisibility(View.INVISIBLE);
+                tv.setHeight(150);
+
                 destInfo.setVisibility(View.VISIBLE);
                 goToRanking.setVisibility(View.VISIBLE);
                 goToRanking.bringToFront();
 
-                arrowButton.setVisibility(View.INVISIBLE);
-                tv.setVisibility(View.INVISIBLE);
+
                 destInfo.setText("Du har kommit till festens destination! \n \n " +   "Adress: " + currentLoc.getAddress() + "\n"
                         + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
                         "Värd: " + currentLoc.getHostName() + "\n \n");
@@ -256,12 +255,16 @@ public class MyLocationDemoActivity extends FragmentActivity
                 if(!destInfoOpened) {
                     if (distance < 50E-5) {
 
+                        arrowButton.setVisibility(View.INVISIBLE);
+                        tv.setVisibility(View.INVISIBLE);
+                        tv.setHeight(150);
+
+
                         destInfo.setVisibility(View.VISIBLE);
                         goToRanking.setVisibility(View.VISIBLE);
                         goToRanking.bringToFront();
 
-                        arrowButton.setVisibility(View.INVISIBLE);
-                        tv.setVisibility(View.INVISIBLE);
+
                         destInfo.setText("Du har kommit till festens destination! \n \n " + "Adress: " + currentLoc.getAddress() + "\n"
                                 + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
                                 "Värd: " + currentLoc.getHostName() + "\n \n");
