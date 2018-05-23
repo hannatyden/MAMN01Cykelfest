@@ -49,6 +49,7 @@
         android:onClick="kartaButton"
         android:text="@string/sommarfesten"
         android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/button1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
