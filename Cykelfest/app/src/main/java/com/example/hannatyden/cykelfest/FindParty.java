@@ -66,15 +66,16 @@ public class FindParty extends AppCompatActivity {
             intent.putExtra("4", partyItems.get(position).address);
             intent.putExtra("5", partyItems.get(position).max);
             intent.putExtra("6", partyItems.get(position).endDate);
+            intent.putExtra("7", partyItems.get(position).attending);
 
-            startActivity(intent);
+            startActivityForResult(intent, 2);
         }
         });
 
         TextView tv = (TextView) findViewById(R.id.textview);
 
 
-        partyItems.add(new PartyItem("Vinter", "Vinterfesten", "181011", "Gatan 1", "50", "181001"));
+        partyItems.add(new PartyItem("Vinter", "Vinterfesten", "181011", "Gatan 1", "50", "181001", "no"));
         parties.add(partyItems.get(0).name);
 
 
@@ -110,15 +111,16 @@ public class FindParty extends AppCompatActivity {
 
     }
 
-
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("BEFORE: ON-ACTIVITY-RESULT FOR party ACTIVITY");
+
         if (requestCode == 1) {
             System.out.println("ResultCode = " + resultCode + " Result OK: " + RESULT_OK);
 
             if (resultCode == RESULT_OK) {
                 party = data.getStringArrayListExtra("partyArray");
-                PartyItem item = new PartyItem(party.get(0),party.get(1), party.get(2), party.get(3), party.get(4), party.get(5));
+                PartyItem item = new PartyItem(party.get(0),party.get(1), party.get(2), party.get(3), party.get(4), party.get(5), "yes");
                 partyItems.add(item);
                 System.out.println("jag har tagit emot er lista");
 
@@ -131,6 +133,25 @@ public class FindParty extends AppCompatActivity {
                 }
 
                 arrayAdapter.notifyDataSetChanged();
+
+            }
+        } else if (requestCode == 2) {
+            System.out.println("Recieved request 2");
+            System.out.println(resultCode);
+            if (resultCode == RESULT_OK) {
+
+                String a = data.getStringExtra("1");
+                String b = data.getStringExtra("2");
+                System.out.println(a);
+                System.out.println(b);
+                for (PartyItem p : partyItems) {
+                    if (p.getName().equals(b)) {
+                        p.setAttending(a);
+                        System.out.println(p.getName());
+
+
+                    }
+                }
 
             }
         }

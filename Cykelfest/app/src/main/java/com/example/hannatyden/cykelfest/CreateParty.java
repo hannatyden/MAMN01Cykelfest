@@ -71,7 +71,7 @@ public class CreateParty extends AppCompatActivity{
             intent.putStringArrayListExtra("partyArray", party);
             setResult(RESULT_OK, intent);
             finish();
-            System.out.println(party);
+           // System.out.println(party);
 
         }
 

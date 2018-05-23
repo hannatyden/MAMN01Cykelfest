@@ -10,15 +10,18 @@ public class PartyItem implements Parcelable {
     public String address;
     public String max;
     public String endDate; //senaste anmälningsdatum
+    public String attending;
 
 
-    public PartyItem(String theme, String name, String date, String address, String max, String endDate){
+    public PartyItem(String theme, String name, String date, String address, String max, String endDate, String attending){
         this.theme = theme;
         this.name = name;
         this.date = date;
         this.address = address;
         this.max = max;
         this.endDate = endDate;
+        this.attending = attending;
+
     }
 
     public String getTheme() {
@@ -43,6 +46,10 @@ public class PartyItem implements Parcelable {
 
     public String getEndDate() {
         return endDate;
+    }
+
+    public String isAttending(){
+        return attending;
     }
 
     //write object values to parcel for storage
@@ -92,7 +99,9 @@ public class PartyItem implements Parcelable {
         this.theme = s;
     }
 
-
+    public void setAttending(String attending) {
+        this.attending = attending;
+    }
 
     //creator - used when un-parceling our parcle (creating the object)
     public static final Parcelable.Creator<PartyItem> CREATOR = new Parcelable.Creator<PartyItem>(){
