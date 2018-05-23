@@ -208,19 +208,19 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
-                arrowButton.setVisibility(View.INVISIBLE);
-                tv.setVisibility(View.INVISIBLE);
-                tv.setHeight(150);
-                infoViewOpened = false;
-
-                destInfo.setVisibility(View.VISIBLE);
-                goToRanking.setVisibility(View.VISIBLE);
-                goToRanking.bringToFront();
-
-
-                destInfo.setText("Du har kommit till festens destination! \n \n " +   "Adress: " + currentLoc.getAddress() + "\n"
-                        + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                        "Värd: " + currentLoc.getHostName() + "\n \n");
+//                arrowButton.setVisibility(View.INVISIBLE);
+//                tv.setVisibility(View.INVISIBLE);
+//                tv.setHeight(150);
+//                infoViewOpened = false;
+//
+//                destInfo.setVisibility(View.VISIBLE);
+//                goToRanking.setVisibility(View.VISIBLE);
+//                goToRanking.bringToFront();
+//
+//
+//                destInfo.setText("Du har kommit till festens destination! \n \n " +   "Adress: " + currentLoc.getAddress() + "\n"
+//                        + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+//                        "Värd: " + currentLoc.getHostName() + "\n \n");
                 //startActivity(i);
                 //startActivityForResult(i, 1);
             }
