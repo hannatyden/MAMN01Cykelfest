@@ -24,7 +24,8 @@
             android:textColor="@android:color/holo_green_dark"
             android:textSize="20sp"
             android:translationZ="5dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="animateView"/>
 
 
         <ImageButton
@@ -46,7 +47,7 @@
             android:layout_width="47dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:onClick="arrowButtonPressed"
+            android:onClick="animateView"
             android:scaleType="fitCenter"
             android:src="@drawable/swipedownv4"
             android:translationZ="10dp" />
