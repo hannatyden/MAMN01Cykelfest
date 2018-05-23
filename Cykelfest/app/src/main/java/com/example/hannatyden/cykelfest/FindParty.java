@@ -120,7 +120,7 @@ public class FindParty extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 party = data.getStringArrayListExtra("partyArray");
-                PartyItem item = new PartyItem(party.get(0),party.get(1), party.get(2), party.get(3), party.get(4), party.get(5), "yes");
+                PartyItem item = new PartyItem(party.get(0),party.get(1), party.get(2), party.get(3), party.get(5), party.get(4), "yes");
                 partyItems.add(item);
                 System.out.println("jag har tagit emot er lista");
 

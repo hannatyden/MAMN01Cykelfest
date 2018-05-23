@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
     private int width;
     private int height;
     private Button backButton;
+    Vibrator vibe;
 
 
     private float vals[] = new float[2];
@@ -56,6 +58,7 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
         //declaring Sensor Manager and accelerometer type
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
         //locate views
         cursor = (ImageView) findViewById(R.id.Cursor);
@@ -79,11 +82,12 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
             public void onClick(View view) { //Anropas när man clickar någonstans på skärmen under aktiviteten.
              //   counter++;
               //  textView.setText("I have been clicked: " + counter + " times");
-                isClicked = true;
-                if(isClicked) {
+
+                if(!isClicked) {
                     Log.i("1" , "I have been pressed");
                     okButton.setVisibility(View.VISIBLE);
                     backButton.setVisibility(View.VISIBLE);
+                    isClicked = true;
                 }
             }
         });
@@ -95,17 +99,19 @@ public class RankingActivity extends AppCompatActivity implements SensorEventLis
         okButton.setVisibility(View.INVISIBLE);
         backButton.setVisibility(View.INVISIBLE);
         isClicked = false;
+        vibe.vibrate(50);
 
     }
 
     public void okButtonPressed(View view) {
-
+            isClicked = true;
             Intent intent = new Intent();
             intent.putExtra("editTextValue", "flag");
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             setResult(RESULT_OK, intent);
-            isClicked = false;
+
             Log.i("2", "Is finishing");
+        vibe.vibrate(50);
             finish();
     }
 
