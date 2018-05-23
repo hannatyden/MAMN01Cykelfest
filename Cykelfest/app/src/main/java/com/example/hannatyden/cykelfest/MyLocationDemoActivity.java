@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +66,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     ValueAnimator animateToSmaller;
     private CurrentLocation currentLoc;
     private String strEditText;
-
+    private boolean destInfoOpened = false;
     private Marker currentMarker;
     private boolean secondDestination = false;
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
@@ -79,6 +81,11 @@ public class MyLocationDemoActivity extends FragmentActivity
 
     private LatLng currentPartyLoc;
     private TextView tv;
+
+    private TextView destInfo;
+    private ImageButton arrowButton;
+    private Button goToRanking;
+
 
     private boolean flag;
 
@@ -102,6 +109,14 @@ public class MyLocationDemoActivity extends FragmentActivity
 
             }
         });
+
+        destInfo = findViewById(R.id.destInfo);
+        goToRanking = (Button) findViewById(R.id.goToRanking);
+        arrowButton = findViewById(R.id.imageButton);
+
+        destInfo.setVisibility(View.INVISIBLE);
+        goToRanking.setVisibility(View.INVISIBLE);
+
 
         //mMap.setMyLocationEnabled(true);
 
@@ -193,11 +208,17 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
 //                        LatLng(location.getLatitude(),
 //                        location.getLongitude()), 17));
+                destInfo.setVisibility(View.VISIBLE);
+                goToRanking.setVisibility(View.VISIBLE);
+                goToRanking.bringToFront();
 
-
-
+                arrowButton.setVisibility(View.INVISIBLE);
+                tv.setVisibility(View.INVISIBLE);
+                destInfo.setText("Du har kommit till festens destination! \n \n " +   "Adress: " + currentLoc.getAddress() + "\n"
+                        + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                        "Värd: " + currentLoc.getHostName() + "\n \n");
                 //startActivity(i);
-                startActivityForResult(i, 1);
+                //startActivityForResult(i, 1);
             }
         });
 
@@ -232,31 +253,46 @@ public class MyLocationDemoActivity extends FragmentActivity
 //                }
                 Double distance = Math.hypot(curLat - currentPartyLoc.latitude, curLong - currentPartyLoc.longitude);
                 Log.i("test", distance.toString());
-                if(distance < 50E-5){
+                if(!destInfoOpened) {
+                    if (distance < 50E-5) {
 
-                    tts.setLanguage(Locale.US);
-                    tts.speak("You have arrived to the party", TextToSpeech.QUEUE_ADD, null);
+                        destInfo.setVisibility(View.VISIBLE);
+                        goToRanking.setVisibility(View.VISIBLE);
+                        goToRanking.bringToFront();
 
-                    Log.i("test", "You are at your party" + distance.toString());
-                    tv.setText("Du har kommit till festens destination!");
-                    // Get instance of Vibrator from current Context
-                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        arrowButton.setVisibility(View.INVISIBLE);
+                        tv.setVisibility(View.INVISIBLE);
+                        destInfo.setText("Du har kommit till festens destination! \n \n " + "Adress: " + currentLoc.getAddress() + "\n"
+                                + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                                "Värd: " + currentLoc.getHostName() + "\n \n");
 
-                    // Vibrate for 400 milliseconds
-                    long[] pattern = { 400, 400, 400};
-                    v.vibrate(pattern , -1);
-                    //v.vibrate(400);
+                        destInfoOpened = true;
+
+                        tts.setLanguage(Locale.US);
+                        tts.speak("You have arrived to the party", TextToSpeech.QUEUE_ADD, null);
+
+                        Log.i("test", "You are at your party" + distance.toString());
+                        //tv.setText("Du har kommit till festens destination!");
+                        // Get instance of Vibrator from current Context
+                        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                        // Vibrate for 400 milliseconds
+                        long[] pattern = {400, 400, 400};
+                        v.vibrate(pattern, -1);
+                        //v.vibrate(400);
 //                    Intent intent = new Intent(context, DestInfoScreen.class);
 //                    startActivity(intent);
 
-                    startActivityForResult(i, 1);
 
-                } else {
-                    tv.setText("Du är inte på festens destination! \n \n" +  "Adress: " + currentLoc.getAddress() + "\n"
-                     + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                    "Värd: " + currentLoc.getHostName());
+                        //startActivityForResult(i, 1);
+
+                    } else {
+                        tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
+                                + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
+                                "Värd: " + currentLoc.getHostName());
 
 
+                    }
                 }
             }
         });
@@ -274,6 +310,15 @@ public class MyLocationDemoActivity extends FragmentActivity
                         currentMarker.remove();
                         secondDestination = true;
                         currentPartyLoc = new LatLng(55.713528, 13.211162);
+
+                        destInfo.setVisibility(View.INVISIBLE);
+                        goToRanking.setVisibility(View.INVISIBLE);
+                        goToRanking.bringToFront();
+
+                        arrowButton.setVisibility(View.VISIBLE);
+                        tv.setVisibility(View.VISIBLE);
+
+
                         currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
                         tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
                                 + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
@@ -298,6 +343,14 @@ public class MyLocationDemoActivity extends FragmentActivity
                     } else {
                         currentMarker.remove();
 
+                        destInfo.setVisibility(View.INVISIBLE);
+                        goToRanking.setVisibility(View.INVISIBLE);
+                        goToRanking.bringToFront();
+
+                        arrowButton.setVisibility(View.VISIBLE);
+                        tv.setVisibility(View.VISIBLE);
+
+
                         currentPartyLoc = new LatLng(55.697738, 13.186190);
                         currentLoc = new CurrentLocation("Stadsparken", "Efterrätt", "0724003631", "Filip Stjernström");
                         tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
@@ -320,7 +373,11 @@ public class MyLocationDemoActivity extends FragmentActivity
     }
 
 
-
+    public void testButton(View view){
+        destInfo.setVisibility(View.VISIBLE);
+        goToRanking.setVisibility(View.VISIBLE);
+        goToRanking.bringToFront();
+    }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
@@ -335,6 +392,11 @@ public class MyLocationDemoActivity extends FragmentActivity
             animateToBigger.start();
             infoViewOpened = true;
         }
+    }
+
+    public void goToRankingButton(View view ){
+        startActivityForResult(new Intent(this, RankingActivity.class), 1);
+        destInfoOpened = false;
     }
 
     @Override
