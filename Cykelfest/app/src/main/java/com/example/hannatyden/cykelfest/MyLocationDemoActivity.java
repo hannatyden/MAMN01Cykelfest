@@ -72,7 +72,7 @@ public class MyLocationDemoActivity extends FragmentActivity
     /* Attribut som används till animation, startSize/endSize anger vilken storlek som boxen ska förstoras/förminskas till
     *  och animationDuration anger hur snabbt animationen ska utföras i milisekunder. */
     final float startSize= 150;
-    final float endSize = 500;
+    final float endSize = 1000;
     long animationDuration = 600;
     private TextToSpeech tts;
 
@@ -289,7 +289,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                     } else {
                         tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
                                 + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                                "Värd: " + currentLoc.getHostName());
+                                "Värd: " + currentLoc.getHostName() + "\n \n" +"För vägledning: \n  1. Klicka på den röda markören på kartan. \n" + "2. Klicka på den lilla pilen nere i högra hörnet.");
 
 
                     }
@@ -322,7 +322,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                         currentLoc = new CurrentLocation("Korsningen", "Huvudrätt", "0723153631", "Bengt Bengtsson");
                         tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
                                 + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                                "Värd: " + currentLoc.getHostName());
+                                "Värd: " + currentLoc.getHostName() + "\n \n" +"För vägledning: \n 1. Klicka på den röda markören på kartan. \n" + "2. Klicka på den lilla pilen nere i högra hörnet.");
 
                         currentMarker = mMap.addMarker(new MarkerOptions()
                                 .position(currentPartyLoc)
@@ -356,7 +356,7 @@ public class MyLocationDemoActivity extends FragmentActivity
                         tv.setText("Du är inte på festens destination! \n \n" + "Adress: " + currentLoc.getAddress() + "\n"
 
                                 + "Rätt: " + currentLoc.getCourse() + "\n" + "Telefonnummer: " + currentLoc.getPhoneNbr() + "\n" +
-                                "Värd: " + currentLoc.getHostName());
+                                "Värd: " + currentLoc.getHostName() + "\n \n" + "För vägledning: \n 1. Klicka på den röda markören på kartan. \n" + "2. Klicka på den lilla pilen nere i högra hörnet.");
 
                         currentMarker = mMap.addMarker(new MarkerOptions()
                                 .position(currentPartyLoc)
